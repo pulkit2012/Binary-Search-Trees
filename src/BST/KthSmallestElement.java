@@ -42,16 +42,49 @@ public class KthSmallestElement {
         return kthSmallest(root.right, k);
     }
 
+    static int kthSmallest2(Node root, int k) {
+        int count = 0;
+        int smallest = Integer.MIN_VALUE;
+        Node curr = root;
+        while (curr != null) {
+            if (curr.left == null) {
+                count++;
+                if (count == k) {
+                    smallest = curr.data;
+                }
+                curr = curr.right;
+            } else {
+                Node pre = curr.left;
+                while (pre.right != null && pre.right != curr) {
+                    pre = pre.right;
+                }
+                if (pre.right == null) {
+                    pre.right = curr;
+                    curr = curr.left;
+                } else {
+                    pre.right = null;
+                    count++;
+                    if (count == k) {
+                        smallest = curr.data;
+                    }
+                    curr = curr.right;
+                }
+            }
+        }
+        return smallest;
+    }
+
     public static void main(String[] args) {
-        Node root = new Node(20);
-        insert(root, 8);
-        insert(root, 22);
+        Node root = new Node(5);
+        insert(root, 3);
+        insert(root, 6);
+        insert(root, 2);
         insert(root, 4);
-        insert(root, 12);
-        insert(root, 10);
-        insert(root, 14);
+        insert(root, 1);
+        //insert(root, 14);
         Node node = kthSmallest(root, 3);
         System.out.println(node == null ? "tree is not that deep" : node.data);
+        System.out.println(kthSmallest2(root,3));
 
     }
 }
