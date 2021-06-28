@@ -1,5 +1,8 @@
 package BST;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class KthSmallestElement {
     static class Node {
         int data;
